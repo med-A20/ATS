@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import streamlit as st
+import pathlib
 import io
 import base64
 import os
@@ -29,8 +30,8 @@ def get_gemini_response(input, pdf_content, prompt):
 def input_pdf_setup(uploaded_file):
     if uploaded_file is not None:
         # convert the pdf to image
-        images = pdf2image.convert_from_bytes(uploaded_file.read(), poppler_path=r'.\poppler-23.11.0\Library\bin')
-
+        print("path", os.path.join(pathlib.Path(__name__).parent.resolve(),'/poppler-23.11.0/Library/bin'))
+        images = pdf2image.convert_from_bytes(uploaded_file.read(), poppler_path=os.path.join(pathlib.Path(__name__).parent.resolve(),'/poppler-23.11.0/Library/bin'))
         first_page = images[0]
 
         #Convert to bytes
