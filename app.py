@@ -53,7 +53,7 @@ def input_pdf_setup(uploaded_file):
 ## Streamlit app
 
 st.set_page_config(page_title="ATS Resume Expert", page_icon="progress.png")
-st.header("ATS Traking System")
+st.header("Resume Application Tracking System")
 input_text = st.text_area(label="Job Description: ", key="input")
 uploaded_file = st.file_uploader(label="Upload your Resume(Pdf format)...", type=['pdf'])
 
@@ -64,15 +64,19 @@ if uploaded_file is not None:
 col1, col2 = st.columns(2)
 
 with col1:
+    submit0 = st.button('Job Description Match')
     submit1 = st.button('CV Assessment')
     submit2 = st.button('Keyword Generation')
     submit3 = st.button('CV Feedback')
-    submit4 = st.button('Tailoring Recommendations')
 with col2:
+    submit4 = st.button('Tailoring Recommendations')
     submit5 = st.button('Missing Keywords')
     submit6 = st.button('Grammar Check')
     submit7 = st.button('CV Enhancement')
 
+input_prompt0 = """
+Analyze the CV and compare it to the provided job description. Assess the level of match between the CV and the job requirements, and provide a percentage or score indicating the degree of compatibility. This will help users gauge how well their CV aligns with the desired qualifications.
+"""
 input_prompt1 = """
 Given a job description and a CV, 
 provide an accurate assessment of the CV's compatibility with the job requirements, 
@@ -155,6 +159,14 @@ elif submit7:
     if uploaded_file is not None:
         pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
         response = get_gemini_response(prompt=input_prompt7, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit0:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt0, pdf_content=pdf_content, input=input_text)
         st.subheader("The Response is :")
         st.write(response)
     else:
