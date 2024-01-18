@@ -52,7 +52,7 @@ def input_pdf_setup(uploaded_file):
 
 ## Streamlit app
 
-st.set_page_config(page_title="ATS Resume Expert")
+st.set_page_config(page_title="ATS Resume Expert", page_icon="progress.png")
 st.header("ATS Traking System")
 input_text = st.text_area(label="Job Description: ", key="input")
 uploaded_file = st.file_uploader(label="Upload your Resume(Pdf format)...", type=['pdf'])
@@ -159,5 +159,30 @@ elif submit7:
         st.write(response)
     else:
         st.write('Please upload the resume(pdf)')
+
+
+
+
+st.markdown("""<div style='    background-color: rgb(248, 249, 250);
+    margin-top: 150px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;'>
+                        <div style="margin : 5px;">
+                            <p style="    font-size: 12px;
+    font-style: italic;
+    font-weight: lighter;"> By Amchia Mohamed</p>
+                        </div>
+                        <div style="margin : 5px;">
+                            <p style="    font-size: 12px;
+    font-style: italic;
+    font-weight: lighter;">Powered by google Gemini</p>
+                        </div>
+            </div>""", unsafe_allow_html=True)
+# st.markdown("<span style='background-color: #f8f9fa;'>_**POWERED BY GOOGLE GEMINI**_</span>", unsafe_allow_html=True)
 
 
