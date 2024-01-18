@@ -60,21 +60,46 @@ uploaded_file = st.file_uploader(label="Upload your Resume(Pdf format)...", type
 if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
-submit1 = st.button('Tell me about the resume')
-submit2 = st.button('How can i improvise my skills')
-submit3 = st.button('What are the keywords that are missing')
-submit4 = st.button('Percentage match')
+# Create two columns
+col1, col2 = st.columns(2)
+
+with col1:
+    submit1 = st.button('CV Assessment')
+    submit2 = st.button('Keyword Generation')
+    submit3 = st.button('CV Feedback')
+    submit4 = st.button('Tailoring Recommendations')
+with col2:
+    submit5 = st.button('Missing Keywords')
+    submit6 = st.button('Grammar Check')
+    submit7 = st.button('CV Enhancement')
 
 input_prompt1 = """
- You are an experienced Technical Human Resource Manager,your task is to review the provided resume against the job description. 
-  Please share your professional evaluation on whether the candidate's profile aligns with the role. 
- Highlight the strengths and weaknesses of the applicant in relation to the specified job requirements.
+Given a job description and a CV, 
+provide an accurate assessment of the CV's compatibility with the job requirements, 
+highlighting both strong matches and potential gaps
 """
 
+input_prompt2 = """
+Based on the provided job description and CV, 
+generate a comprehensive list of keywords and skills that are highly relevant to the job, 
+ensuring the CV aligns with the desired qualifications.
+"""
 input_prompt3 = """
-You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
-your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
-the job description. First the output should come as percentage and then keywords missing and last final thoughts.
+Provide detailed feedback on the CV's structure, 
+format, and content, suggesting improvements to optimize its visibility and attractiveness to ATS algorithms and human recruiters
+"""
+input_prompt4 = """
+Offer personalized recommendations for tailoring the CV to enhance its chances of passing through ATS filters, including specific sections to emphasize, 
+keywords to incorporate, and formatting strategies to employ
+"""
+input_prompt5 = """
+Identify any keywords or skills that are missing from the CV but are important for the job description. Provide a comprehensive list of these missing keywords to help improve the CV's alignment with the job requirements
+"""
+input_prompt6 = """
+Analyze the CV for grammatical errors and inconsistencies. Highlight and suggest corrections for any grammar or punctuation mistakes, ensuring the CV presents a polished and professional image.
+"""
+input_prompt7 = """
+Offer specific suggestions to enhance the power and impact of the CV. This may include recommendations to strengthen the language, rephrase certain sections, or emphasize accomplishments and achievements to make the CV more compelling and persuasive
 """
 
 if submit1:
@@ -89,7 +114,47 @@ if submit1:
 elif submit2:
     if uploaded_file is not None:
         pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt2, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit3:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
         response = get_gemini_response(prompt=input_prompt3, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit4:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt4, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit5:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt5, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit6:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt6, pdf_content=pdf_content, input=input_text)
+        st.subheader("The Response is :")
+        st.write(response)
+    else:
+        st.write('Please upload the resume(pdf)')
+elif submit7:
+    if uploaded_file is not None:
+        pdf_content = input_pdf_setup(uploaded_file=uploaded_file)
+        response = get_gemini_response(prompt=input_prompt7, pdf_content=pdf_content, input=input_text)
         st.subheader("The Response is :")
         st.write(response)
     else:
