@@ -163,7 +163,7 @@ elif submit7:
 
 
 
-st.markdown("""<div style='    background-color: rgb(248, 249, 250);
+st.markdown("""<div style='
     margin-top: 150px;
     border-radius: 8px;
     display: flex;
