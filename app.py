@@ -15,9 +15,8 @@ import io
 import base64
 import os
 from PIL import Image
-import pdf2image
 import google.generativeai as ggai
-
+import pypdfium2 as pdfium
 
 # ggai Configuration 
 ggai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
@@ -30,9 +29,19 @@ def get_gemini_response(input, pdf_content, prompt):
 def input_pdf_setup(uploaded_file):
     if uploaded_file is not None:
         # convert the pdf to image
-        images = pdf2image.convert_from_bytes(uploaded_file.read(), poppler_path='/opt/render/project/src/poppler-23.11.0/Library/bin')
-        first_page = images[0]
-
+        # images = pdf2image.convert_from_bytes(uploaded_file.read(), poppler_path='/opt/render/project/src/poppler-23.11.0/Library/bin')
+        # first_page = images[0]
+        pdf = pdfium.PdfDocument(uploaded_file)
+        page = pdf.get_page(0)
+        bitmap  = page.render(
+        scale=1,
+        rotation=0,
+        # crop=(0, 0, 0, 0),
+        # annotations=True,
+        # greyscale=False,
+        )
+        first_page = bitmap.to_pil()
+        
         #Convert to bytes
         img_byte_arr = io.BytesIO()
         first_page.save(img_byte_arr, format='JPEG')
